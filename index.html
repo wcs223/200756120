@@ -75,6 +75,7 @@
       "esri/views/MapView",
       "esri/WebMap",
       "esri/widgets/Home",
+      "esri/widgets/Compass",
       "esri/widgets/DistanceMeasurement2D",
       "esri/widgets/AreaMeasurement2D",
       "esri/widgets/Editor",
@@ -82,7 +83,8 @@
       "esri/widgets/ScaleBar",
       "esri/widgets/CoordinateConversion",
       "dojo/domReady!"
-    ], function (MapView, WebMap, Home, DistanceMeasurement2D, AreaMeasurement2D, Editor, Legend, ScaleBar, CoordinateConversion) {
+    ], function (MapView, WebMap, Home, Compass,DistanceMeasurement2D, AreaMeasurement2D, 
+    Editor, Legend, ScaleBar, CoordinateConversion) {
       let activeWidget = null;
 
       // 创建一个WebMap实例
@@ -107,7 +109,20 @@
           position: "top-left"
         });
       }
-      
+
+      // 调用ShowCompass函数来显示指南针
+      ShowCompass();
+      // 定义ShowCompass函数
+      function ShowCompass() {
+        // 创建一个指南针部件并传入视图view
+        var compassWidget = new Compass({
+          view: view
+        });
+        // 将指南针部件添加到视图的左上角
+        view.ui.add(compassWidget, "top-left");
+      };
+
+
       view.ui.add("topbar", "top-right"); //将id为"topbar"的元素添加到视图的UI界面中，位置在右上角
 
       //当id为"distanceButton"的按钮被点击时，执行以下操作：先将当前活动的测量工具设置为null。如果按钮没有被激活（没有"active"类），
@@ -149,9 +164,7 @@
             activeWidget = new AreaMeasurement2D({
               view: view
             });
-
             activeWidget.viewModel.start();
-
             view.ui.add(activeWidget, "top-right");
             setActiveButton(document.getElementById("areaButton"));
             break;
@@ -164,7 +177,6 @@
             break;
         }
       }
-
        //setActiveButton函数用于设置活动按钮：先聚焦到视图，以激活绘图的键盘快捷键。移除所有带有"active"类的元素的"active"类。
        //如果传入了选中的按钮元素，则为其添加"active"类。
       function setActiveButton(selectedButton) {

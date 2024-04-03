@@ -75,6 +75,7 @@
       "esri/views/MapView",
       "esri/WebMap",
       "esri/widgets/Home",
+      "esri/widgets/Search",
       "esri/widgets/Compass",
       "esri/widgets/DistanceMeasurement2D",
       "esri/widgets/AreaMeasurement2D",
@@ -83,7 +84,7 @@
       "esri/widgets/ScaleBar",
       "esri/widgets/CoordinateConversion",
       "dojo/domReady!"
-    ], function (MapView, WebMap, Home, Compass,DistanceMeasurement2D, AreaMeasurement2D, 
+    ], function (MapView, WebMap, Home,Search, Compass,DistanceMeasurement2D, AreaMeasurement2D, 
     Editor, Legend, ScaleBar, CoordinateConversion) {
       let activeWidget = null;
 
@@ -109,6 +110,15 @@
           position: "top-left"
         });
       }
+
+      var searchWidget = new Search({
+          view: view
+        });
+
+        // 查询部件
+        view.ui.add(searchWidget, {
+          position: "top-right"
+        });
 
       // 调用ShowCompass函数来显示指南针
       ShowCompass();

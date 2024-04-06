@@ -16,6 +16,37 @@
       width: 100%;
     }
 
+    #iputContent {
+      position: absolute;
+      top: 14px;
+      right: 110px;
+      z-index: 999;
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 10px;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    #queryInput {
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
+
+    #queryButton {
+      padding: 8px 15px;
+      margin-left: 10px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    #queryButton:hover {
+      background-color: #0056b3;
+    }
+
     #topbar {
       background: #fff;
       padding: 10px;
@@ -67,7 +98,6 @@
       border-radius: 5px;
     }
   </style>
-  <link rel="stylesheet" href="css/input.css">
 
 <body>
   <!-- 用于显示地图的div元素 -->
@@ -96,7 +126,7 @@
       "esri/tasks/support/Query",
       "esri/tasks/QueryTask",
       "dojo/domReady!"
-    ], function (WebMap,MapView, Home, Compass, DistanceMeasurement2D, AreaMeasurement2D,
+    ], function (WebMap, MapView, Home, Compass, DistanceMeasurement2D, AreaMeasurement2D,
       Editor, Legend, ScaleBar, CoordinateConversion, FeatureLayer, Query, QueryTask) {
       let activeWidget = null;
 
@@ -118,7 +148,7 @@
         var query = featureLayer.createQuery();                                         // 创建一个查询对象 query
         query.where = "fwbh = '" + document.getElementById("queryInput").value + "'";   // 设置查询条件为输入框的值
         var featureLayerView = view.layerViews.getItemAt(1);
-                                                                                                 
+
         featureLayer.queryFeatures(query).then(function (response) {                     // 执行查询操作并处理异步操作
           if (response.features.length > 0) {                                           // 如果有符合条件的要素
             var featureGeometry = response.features[0].geometry;                        // 获取第一个符合条件要素的几何信息
